@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="tsGrad" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#30A46C"/>
+      <stop offset="100%" stop-color="#1B6F46"/>
+    </linearGradient>
+    <filter id="tsShadow" x="0" y="2" width="48" height="46" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <path d="M24 4L8 10V22C8 32.5 14.8 42.2 24 44C33.2 42.2 40 32.5 40 22V10L24 4Z" fill="url(#tsGrad)" filter="url(#tsShadow)"/>
+  <path d="M24 6.5L10 11.8V22C10 31.2 16 39.8 24 41.5C32 39.8 38 31.2 38 22V11.8L24 6.5Z" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="1.5"/>
+  <path d="M16 23.5L21.5 29L32 18.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

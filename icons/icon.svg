@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#30A46C"/>
+      <stop offset="100%" stop-color="#18633F"/>
+    </linearGradient>
+    <filter id="glow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#18633F" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#0F172A"/>
+  <!-- Subtle radar / scan ring -->
+  <circle cx="64" cy="64" r="50" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <circle cx="64" cy="64" r="42" stroke="#1E293B" stroke-width="2"/>
+  <!-- Center shield -->
+  <path d="M64 24L32 38V66C32 89 45.6 109 64 114C82.4 109 96 89 96 66V38L64 24Z" fill="url(#shieldGrad)" filter="url(#glow)"/>
+  <path d="M64 30L38 41.5V66C38 85.5 49.5 102.5 64 107C78.5 102.5 90 85.5 90 66V41.5L64 30Z" stroke="#A7F3D0" stroke-opacity="0.3" stroke-width="2"/>
+  <!-- Checkmark -->
+  <path d="M48 68L59 79L80 54" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
