@@ -1,0 +1,262 @@
+[
+  {
+    "id": "hoax_001",
+    "claim_text": "Drinking boiled garlic water cures coronavirus and all viral respiratory infections immediately.",
+    "category": "health",
+    "first_seen_date": "2020-02-10",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters",
+      "https://factcheck.afp.com/garlic-water-cannot-cure-novel-coronavirus"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_authority", "fear_appeal"]
+  },
+  {
+    "id": "hoax_002",
+    "claim_text": "Government is giving free laptops and ₹50,000 monthly allowance to all students. Click the link to register now before spots fill up.",
+    "category": "civic",
+    "first_seen_date": "2021-06-15",
+    "verdict": "false",
+    "verified_sources": [
+      "https://pib.gov.in/factcheck",
+      "https://factly.in/fake-link-promising-free-laptops-from-government"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_urgency", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_003",
+    "claim_text": "WhatsApp will become paid ₹0.99 per message starting tomorrow unless you forward this message to 10 contacts.",
+    "category": "other",
+    "first_seen_date": "2012-03-01",
+    "verdict": "false",
+    "verified_sources": [
+      "https://faq.whatsapp.com/",
+      "https://www.snopes.com/fact-check/whatsapp-paid-subscription-chain-message/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_urgency", "fear_appeal"]
+  },
+  {
+    "id": "hoax_004",
+    "claim_text": "Holding your breath for 10 seconds without coughing proves your lungs are completely healthy and free of disease.",
+    "category": "health",
+    "first_seen_date": "2020-03-05",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters",
+      "https://www.hopkinsmedicine.org/health/conditions-and-diseases/coronavirus/coronavirus-myth-versus-fact"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["false_authority"]
+  },
+  {
+    "id": "hoax_005",
+    "claim_text": "Urgent alert: Child kidnappers wearing delivery uniforms are operating in your local city right now. Share with all parents!",
+    "category": "disaster",
+    "first_seen_date": "2018-05-12",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.boomlive.in/fact-check/child-abduction-rumors-whatsapp",
+      "https://altnews.in/viral-child-kidnapping-whatsapp-hoax/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["fear_appeal", "false_urgency"]
+  },
+  {
+    "id": "hoax_006",
+    "claim_text": "Your bank account will be blocked by midnight due to pending KYC update. Click link immediately to verify details.",
+    "category": "financial",
+    "first_seen_date": "2021-01-20",
+    "verdict": "false",
+    "verified_sources": [
+      "https://rbi.org.in/scripts/BS_PressReleaseDisplay.aspx",
+      "https://cybercrime.gov.in/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_urgency", "fear_appeal"]
+  },
+  {
+    "id": "hoax_007",
+    "claim_text": "UNESCO has officially named the national anthem of India as the best national anthem in the world.",
+    "category": "civic",
+    "first_seen_date": "2008-09-10",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.unesco.org/en/fact-check-myths",
+      "https://www.altnews.in/unesco-best-national-anthem-hoax/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_authority", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_008",
+    "claim_text": "Drinking warm lemon water with baking soda every morning destroys cancer cells and makes chemotherapy unnecessary.",
+    "category": "health",
+    "first_seen_date": "2011-04-18",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.cancer.org/healthy/eat-healthy-get-active/acs-mindful-eating-healthy-diet/cancer-myths.html",
+      "https://www.snopes.com/fact-check/lemon-cancer-cure/"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["false_authority", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_009",
+    "claim_text": "NASA satellite image shows the entire country illuminated brilliantly on Diwali night.",
+    "category": "other",
+    "first_seen_date": "2012-11-13",
+    "verdict": "false",
+    "verified_sources": [
+      "https://earthobservatory.nasa.gov/images/80026/india-at-night",
+      "https://www.boomlive.in/nasa-diwali-photo-hoax/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_authority", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_0010",
+    "claim_text": "5G mobile network radiation causes sudden bird deaths and weakens human immunity overnight.",
+    "category": "health",
+    "first_seen_date": "2019-11-02",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.who.int/news-room/questions-and-answers/item/radiation-5g-mobile-networks-and-health",
+      "https://fullfact.org/online/5g-birds-dead/"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["fear_appeal", "false_authority"]
+  },
+  {
+    "id": "hoax_0011",
+    "claim_text": "Massive earthquake of magnitude 9.5 predicted for tonight across Central region. Emergency declared, evacuate homes now!",
+    "category": "disaster",
+    "first_seen_date": "2017-09-08",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.usgs.gov/faqs/can-you-predict-earthquakes",
+      "https://pib.gov.in/factcheck"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["fear_appeal", "false_urgency"]
+  },
+  {
+    "id": "hoax_0012",
+    "claim_text": "Putting raw onion slices in your socks overnight absorbs all body toxins and cures fever completely.",
+    "category": "health",
+    "first_seen_date": "2015-02-14",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.healthline.com/health/onion-in-sock-fever",
+      "https://www.snopes.com/fact-check/onions-in-socks/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_authority"]
+  },
+  {
+    "id": "hoax_0013",
+    "claim_text": "Government announces complete lockdown and curfew from tomorrow 6 PM nationwide. Stock emergency groceries now.",
+    "category": "civic",
+    "first_seen_date": "2020-12-01",
+    "verdict": "false",
+    "verified_sources": [
+      "https://pib.gov.in/factcheck",
+      "https://factly.in/fake-notice-nationwide-lockdown/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["fear_appeal", "false_urgency"]
+  },
+  {
+    "id": "hoax_0014",
+    "claim_text": "Click here to claim ₹5,000 festive gift card from Tata / Amazon / Flipkart celebrating company anniversary.",
+    "category": "financial",
+    "first_seen_date": "2021-10-15",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.tata.com/newsroom/tata-group-advisory-fake-offers",
+      "https://www.boomlive.in/fact-check/fake-anniversary-contest-scam-links"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_urgency", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_0015",
+    "claim_text": "New currency notes contain embedded GPS microchips that can be tracked by income tax satellites up to 12 meters underground.",
+    "category": "civic",
+    "first_seen_date": "2016-11-09",
+    "verdict": "false",
+    "verified_sources": [
+      "https://rbi.org.in/",
+      "https://www.altnews.in/nano-gps-chip-2000-rupee-note-media-media-hall-of-shame/"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["false_authority", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_0016",
+    "claim_text": "Recycled storm video shared claiming massive hurricane hit coastal city today.",
+    "category": "disaster",
+    "first_seen_date": "2019-05-03",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.boomlive.in/fact-check/old-video-cyclone-shared-as-recent",
+      "https://factly.in/old-storm-video-passed-off-as-recent-cyclone/"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["fear_appeal"]
+  },
+  {
+    "id": "hoax_0017",
+    "claim_text": "Inhaling steam with clove and eucalyptus oil kills 100% of respiratory viruses in your throat immediately.",
+    "category": "health",
+    "first_seen_date": "2020-04-12",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters",
+      "https://www.aappublications.org/news/2020/05/20/steamburns052020"
+    ],
+    "resurfaces_seasonally": true,
+    "persuasion_tactics": ["false_authority"]
+  },
+  {
+    "id": "hoax_0018",
+    "claim_text": "Forwarding a green heart emoji to 5 groups activates new WhatsApp dark mode ultra encryption.",
+    "category": "other",
+    "first_seen_date": "2019-08-20",
+    "verdict": "false",
+    "verified_sources": [
+      "https://faq.whatsapp.com/",
+      "https://www.snopes.com/fact-check/whatsapp-emoji-hoax/"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["false_urgency", "fake_social_proof"]
+  },
+  {
+    "id": "hoax_0019",
+    "claim_text": "Drink cold water after meals causes instant stomach cancer by solidifying oils into fat.",
+    "category": "health",
+    "first_seen_date": "2006-07-11",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.snopes.com/fact-check/cold-water-cancer/",
+      "https://www.healthline.com/health/is-drinking-cold-water-bad-for-you"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["fear_appeal", "false_authority"]
+  },
+  {
+    "id": "hoax_0020",
+    "claim_text": "Licking a battery power indicator shows true remaining capacity and restores smartphone battery life by 30%.",
+    "category": "other",
+    "first_seen_date": "2014-03-25",
+    "verdict": "false",
+    "verified_sources": [
+      "https://www.snopes.com/fact-check/battery-life-trick/",
+      "https://www.makeuseof.com/tag/smartphone-battery-myths-debunked/"
+    ],
+    "resurfaces_seasonally": false,
+    "persuasion_tactics": ["false_authority"]
+  }
+]
