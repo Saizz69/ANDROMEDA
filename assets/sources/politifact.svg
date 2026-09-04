@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125 32" width="125" height="32" fill="none">
+  <path d="M6 18C6 11.3726 11.3726 6 18 6C24.6274 6 30 11.3726 30 18H6Z" fill="#1D4ED8"/>
+  <line x1="18" y1="18" x2="24" y2="10" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="18" cy="18" r="2.5" fill="#FFFFFF"/>
+  <text x="36" y="21" fill="#1E293B" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">PolitiFact</text>
+</svg>
