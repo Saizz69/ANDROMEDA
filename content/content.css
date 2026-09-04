@@ -1,0 +1,24 @@
+/**
+ * TruthScan Minimal Global Host Styles
+ * Strictly non-invasive: does NOT modify page layout or typography.
+ */
+
+#truthscan-portal-root {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 0 !important;
+  overflow: visible !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+}
+
+.ts-badge-host {
+  font-size: 12px !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
+  text-indent: 0 !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
