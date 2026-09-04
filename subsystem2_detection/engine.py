@@ -7,7 +7,9 @@ from subsystem2_detection.claim_matcher import claim_matcher
 from subsystem2_detection.pattern_tagger import pattern_tagger
 from subsystem2_detection.deepfake_classifier import deepfake_classifier
 from subsystem2_detection.tavily_search import tavily_search
+from subsystem2_detection.google_search import google_search
 from subsystem3_response.llm_generator import llm_generator
+from config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -80,16 +82,34 @@ class DetectionEngine:
                     evidence_summary="Image analysis detected synthetic noise or manipulation artifacts."
                 )
 
-        # 3. Live Web Search & Evidence Retrieval via Tavily
-        logger.info(f"Querying Tavily Search for live web evidence: '{text_to_check[:60]}...'")
-        tavily_data = await tavily_search.search_evidence(text_to_check, max_results=5)
+        # 3. Live Web Search & Evidence Retrieval (Google Search & Tavily)
+        evidence_results = []
+        sources = []
 
-        if tavily_data.get("has_sufficient_evidence") and tavily_data.get("results"):
-            evidence_results = tavily_data["results"]
-            sources = tavily_data.get("sources", [])
+        # 3a. Search Google for general info and fact-check tools
+        if settings.GOOGLE_API_KEY:
+            logger.info(f"Querying Google Search for general info & evidence: '{text_to_check[:60]}...'")
+            google_data = await google_search.search_evidence(text_to_check, max_results=5)
+            if google_data.get("has_sufficient_evidence"):
+                evidence_results.extend(google_data.get("results", []))
+                for s in google_data.get("sources", []):
+                    if s not in sources:
+                        sources.append(s)
 
+        # 3b. Search Tavily for additional real-time web evidence
+        if not evidence_results or settings.TAVILY_API_KEY:
+            logger.info(f"Querying Tavily Search for web evidence: '{text_to_check[:60]}...'")
+            tavily_data = await tavily_search.search_evidence(text_to_check, max_results=5)
+            if tavily_data.get("has_sufficient_evidence"):
+                evidence_results.extend(tavily_data.get("results", []))
+                for s in tavily_data.get("sources", []):
+                    if s not in sources:
+                        sources.append(s)
+
+        # If evidence was retrieved from Google or Tavily
+        if evidence_results:
             # 4. Evaluate Retrieved Evidence using Featherless AI
-            logger.info("Evaluating Tavily evidence using Featherless AI...")
+            logger.info(f"Evaluating {len(evidence_results)} evidence items using Featherless AI...")
             eval_result = await llm_generator.evaluate_evidence(
                 claim=text_to_check,
                 evidence_items=evidence_results,
@@ -105,13 +125,13 @@ class DetectionEngine:
                 matched_claim=None,
                 first_seen_date=None,
                 manipulation_tags=list(set(manipulation_tags)),
-                sources=sources[:3],
+                sources=sources[:4],
                 confidence_note=confidence_note,
                 evidence_summary=evidence_summary
             )
 
-        # 5. Insufficient verified evidence / Tavily failure fallback
-        logger.info("Insufficient evidence retrieved from Tavily web search. Returning UNVERIFIABLE.")
+        # 5. Insufficient verified evidence / Search failure fallback
+        logger.info("Insufficient evidence retrieved from Google and Tavily search. Returning UNVERIFIABLE.")
         return VerdictPayload(
             verdict="UNVERIFIABLE",
             matched_claim=None,

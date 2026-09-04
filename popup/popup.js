@@ -94,7 +94,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Display Active Engine
     if (activeEngineVal) {
-      if (hasApiKey) {
+      if (settings.useLocalBackend !== false) {
+        activeEngineVal.textContent = '🚀 ANDROMEDA Engine (Local)';
+        activeEngineVal.style.color = '#10b981';
+      } else if (hasApiKey) {
         const modelName = (settings.featherlessModel || 'Llama-3.1').split('/').pop();
         activeEngineVal.textContent = `🤖 Featherless AI (${modelName})`;
         activeEngineVal.style.color = '#7c3aed';

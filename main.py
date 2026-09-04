@@ -3,9 +3,10 @@ import logging
 from pathlib import Path
 from typing import Optional
 from fastapi import FastAPI, Request, Form, File, UploadFile
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
 from subsystem1_ingestion.models import NormalizedPayload
@@ -13,6 +14,7 @@ from subsystem1_ingestion.web_companion import router as ingestion_router
 from subsystem1_ingestion.ocr_engine import ocr_engine
 from subsystem2_detection.deepfake_classifier import router as deepfake_router
 from subsystem2_detection.engine import detection_engine
+from subsystem2_detection.claim_matcher import claim_matcher
 from subsystem3_response.responder import response_orchestrator
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -24,8 +26,22 @@ app = FastAPI(
     description="Misinformation-checking assistant for first-time internet users and older relatives."
 )
 
+# Enable CORS for browser extensions and cross-origin Web Companion requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 BASE_DIR = Path(__file__).resolve().parent
+
+# Mount static asset directories
 app.mount("/static", StaticFiles(directory=BASE_DIR / "web" / "static"), name="static")
+app.mount("/test-assets", StaticFiles(directory=BASE_DIR / "test"), name="test-assets")
+app.mount("/icons", StaticFiles(directory=BASE_DIR / "icons"), name="icons")
+
 templates = Jinja2Templates(directory=BASE_DIR / "web" / "templates")
 
 # Register Subsystem Routers
@@ -36,6 +52,36 @@ app.include_router(deepfake_router)
 async def serve_companion_ui(request: Request):
     """Render companion web page."""
     return templates.TemplateResponse(request=request, name="index.html")
+
+@app.get("/demo", response_class=HTMLResponse)
+async def serve_demo_ui():
+    """Serve the interactive feed demo test suite."""
+    demo_path = BASE_DIR / "test" / "demo.html"
+    if demo_path.exists():
+        with open(demo_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        # Adjust relative stylesheet/script references if needed
+        content = content.replace('href="demo.css"', 'href="/test-assets/demo.css"')
+        content = content.replace('src="demo.js"', 'src="/test-assets/demo.js"')
+        return HTMLResponse(content=content)
+    return HTMLResponse(content="<h1>Demo file not found</h1>", status_code=404)
+
+@app.get("/api/status")
+async def get_system_status():
+    """System health check and connected subsystems inspection."""
+    return {
+        "status": "online",
+        "project": settings.PROJECT_NAME,
+        "version": settings.VERSION,
+        "llm_model": settings.LLM_MODEL,
+        "mock_services": settings.USE_MOCK_SERVICES,
+        "database_entries": len(claim_matcher.hoaxes) if hasattr(claim_matcher, "hoaxes") else 0,
+        "subsystems": {
+            "subsystem1_ingestion": "active (Text, OCR, ASR)",
+            "subsystem2_detection": "active (Curated DB, Tavily, Featherless AI, Forensic Tampering)",
+            "subsystem3_response": "active (Grounded LLM, Pillow Card Renderer)"
+        }
+    }
 
 @app.post("/api/check-payload")
 async def check_normalized_payload(payload: NormalizedPayload):

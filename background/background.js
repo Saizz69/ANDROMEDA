@@ -3,7 +3,7 @@
  * Coordinates fact verification requests, Featherless AI LLM calls, caching, settings, tab stats, and context menus.
  */
 
-import { verifyContent, testFeatherlessConnection, RATING_COLORS } from './fact-engine.js';
+import { verifyContent, testFeatherlessConnection, testBackendConnection, RATING_COLORS } from './fact-engine.js';
 
 // Default user configuration: Whitelist is empty by default so user can test on any live site!
 const DEFAULT_SETTINGS = {
@@ -13,6 +13,8 @@ const DEFAULT_SETTINGS = {
   scanVideos: true,
   sensitivity: 'medium', // 'low' | 'medium' | 'high'
   whitelist: [], // Empty by default: all live sites are scanned
+  useLocalBackend: true,
+  backendUrl: 'http://127.0.0.1:8000',
   featherlessApiKey: '',
   featherlessModel: 'meta-llama/Meta-Llama-3.1-8B-Instruct',
   googleApiKey: '',
@@ -99,6 +101,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'TEST_FEATHERLESS_API') {
     const { apiKey, model } = request;
     testFeatherlessConnection(apiKey, model)
+      .then(res => sendResponse(res))
+      .catch(err => sendResponse({ success: false, error: err.message }));
+    return true;
+  }
+
+  if (request.action === 'TEST_BACKEND_CONNECTION') {
+    const { backendUrl } = request;
+    testBackendConnection(backendUrl)
       .then(res => sendResponse(res))
       .catch(err => sendResponse({ success: false, error: err.message }));
     return true;

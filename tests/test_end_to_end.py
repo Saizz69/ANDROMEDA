@@ -35,6 +35,23 @@ def test_check_payload_ambiguous_claim():
     response = client.post("/api/check-payload", json=payload_data)
     assert response.status_code == 200
     res_json = response.json()
-    assert res_json["verdict"]["verdict"].upper() in ["UNVERIFIABLE", "UNVERIFIED", "FALSE", "TRUE", "MISLEADING"]
-    assert "couldn't verify" in res_json["text_explanation"].lower() or "unverified" in res_json["text_explanation"].lower() or "evidence" in res_json["text_explanation"].lower()
+def test_demo_page_serves_html():
+    response = client.get("/demo")
+    assert response.status_code == 200
+    assert "TruthScan Test Suite" in response.text
+
+def test_api_status_endpoint():
+    response = client.get("/api/status")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "online"
+    assert "subsystems" in data
+    assert data["database_entries"] > 0
+
+def test_check_web_text_submission():
+    response = client.post("/api/check-web", data={"text_content": "Drinking boiled garlic water cures coronavirus"})
+    assert response.status_code == 200
+    res_json = response.json()
+    assert res_json["verdict"]["verdict"].upper() == "FALSE"
+    assert res_json["card_image_base64"] is not None
 

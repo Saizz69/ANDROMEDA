@@ -51,6 +51,21 @@ async def test_tavily_search_empty_query():
     assert res["has_sufficient_evidence"] is False
     assert len(res["results"]) == 0
 
+from subsystem2_detection.google_search import google_search
+
+@pytest.mark.asyncio
+async def test_google_search_empty_query():
+    res = await google_search.search_evidence("")
+    assert res["has_sufficient_evidence"] is False
+    assert len(res["results"]) == 0
+
+@pytest.mark.asyncio
+async def test_google_search_mock_evidence():
+    res = await google_search.search_evidence("NASA James Webb Space Telescope")
+    assert res["has_sufficient_evidence"] is True
+    assert len(res["results"]) > 0
+    assert "NASA" in res["results"][0]["content"] or "James Webb" in res["results"][0]["title"]
+
 @pytest.mark.asyncio
 async def test_llm_generator_evaluate_evidence_fallback():
     eval_res = llm_generator._fallback_evidence_evaluation(
@@ -61,3 +76,4 @@ async def test_llm_generator_evaluate_evidence_fallback():
         ]
     )
     assert eval_res["verdict"] == "FALSE"
+

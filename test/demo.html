@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TruthScan — Interactive Test & Demo Suite</title>
   <link rel="stylesheet" href="demo.css">
 </head>
+
 <body>
   <!-- Demo Top Bar -->
   <header class="demo-topbar">
     <div class="topbar-container">
       <div class="topbar-brand">
         <svg class="brand-shield" viewBox="0 0 48 48" width="28" height="28" fill="none">
-          <path d="M24 4L8 10V22C8 32.5 14.8 42.2 24 44C33.2 42.2 40 32.5 40 22V10L24 4Z" fill="#30A46C"/>
-          <path d="M16 23.5L21.5 29L32 18.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 4L8 10V22C8 32.5 14.8 42.2 24 44C33.2 42.2 40 32.5 40 22V10L24 4Z" fill="#30A46C" />
+          <path d="M16 23.5L21.5 29L32 18.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"
+            stroke-linejoin="round" />
         </svg>
         <div>
           <span class="brand-title">TruthScan Test Suite</span>
@@ -22,11 +25,18 @@
       </div>
 
       <div class="topbar-actions">
+        <a href="/" class="demo-btn"
+          style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.4);">
+          🌐 Companion App
+        </a>
         <button id="btn-add-live-msg" class="demo-btn live-btn">
           💬 Simulate Live Message
         </button>
         <button id="btn-add-post" class="demo-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
           Add Feed Post
         </button>
         <button id="btn-toggle-edge" class="demo-btn secondary">
@@ -40,7 +50,8 @@
   <div class="demo-intro">
     <div class="intro-content">
       <h2>Non-Disruptive Fact-Check Overlay Playground</h2>
-      <p>Observe how small circular traffic-light badges attach to the top-right corner of each content item without moving or breaking any layout geometry. Click any badge to open its auto-flipping details card.</p>
+      <p>Observe how small circular traffic-light badges attach to the top-right corner of each content item without
+        moving or breaking any layout geometry. Click any badge to open its auto-flipping details card.</p>
       <div class="legend-pills">
         <span class="pill pill-green">● Green = Verified True</span>
         <span class="pill pill-yellow">● Yellow = Needs Context</span>
@@ -52,21 +63,25 @@
 
   <!-- Main Feed -->
   <main class="feed-container" id="feed">
-    
+
     <!-- Post 1: Verified Accurate (Green) -->
     <article class="feed-card" id="post-jwst">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Dr. Elena Vance <span class="verified-check">✓</span></div>
           <div class="author-handle">@astro_elena • 2h ago</div>
         </div>
       </div>
       <div class="card-text">
-        Spectacular science today: NASA’s James Webb Space Telescope has released the historic deepest infrared observation of galaxy cluster SMACS 0723, showing thousands of galaxies formed over 13 billion years ago.
+        Spectacular science today: NASA’s James Webb Space Telescope has released the historic deepest infrared
+        observation of galaxy cluster SMACS 0723, showing thousands of galaxies formed over 13 billion years ago.
       </div>
       <div class="card-media">
-        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80" alt="NASA James Webb Space Telescope SMACS 0723 deep field observation">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80"
+          alt="NASA James Webb Space Telescope SMACS 0723 deep field observation">
       </div>
       <div class="card-actions">
         <span>💬 412</span>
@@ -78,17 +93,21 @@
     <!-- Post 2: Debunked / Manipulated Image (Red) -->
     <article class="feed-card" id="post-pope">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Viral Buzz Wire</div>
           <div class="author-handle">@buzz_unfiltered • 4h ago</div>
         </div>
       </div>
       <div class="card-text">
-        BREAKING: Pope Francis spotted looking stylish wearing a custom white Balenciaga puffer coat jacket in Rome! Fashion world is completely stunned by this new drip.
+        BREAKING: Pope Francis spotted looking stylish wearing a custom white Balenciaga puffer coat jacket in Rome!
+        Fashion world is completely stunned by this new drip.
       </div>
       <div class="card-media">
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&auto=format&fit=crop&q=80" alt="AI Generated Image Pope Francis in Balenciaga Puffer Coat jacket">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&auto=format&fit=crop&q=80"
+          alt="AI Generated Image Pope Francis in Balenciaga Puffer Coat jacket">
       </div>
       <div class="card-actions">
         <span>💬 1.2K</span>
@@ -100,14 +119,17 @@
     <!-- Post 3: Needs Context / Partially True (Yellow) -->
     <article class="feed-card" id="post-gas">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Market Trendline</div>
           <div class="author-handle">@markettrends • 6h ago</div>
         </div>
       </div>
       <div class="card-text">
-        Consumer update: National average gas prices have hit an all-time high, the highest ever recorded in American history according to pump receipts across the country.
+        Consumer update: National average gas prices have hit an all-time high, the highest ever recorded in American
+        history according to pump receipts across the country.
       </div>
       <div class="card-actions">
         <span>💬 319</span>
@@ -119,14 +141,17 @@
     <!-- Post 4: Dangerous Health Misinformation (Red) -->
     <article class="feed-card" id="post-health">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Natural Remedies Hub</div>
           <div class="author-handle">@holistic_secret • 8h ago</div>
         </div>
       </div>
       <div class="card-text">
-        DOCTORS ARE HIDING THIS: Drinking warm lemon water and baking soda can cure cancer and is 10,000 times stronger than chemotherapy with zero side effects! Share before big pharma takes this down!
+        DOCTORS ARE HIDING THIS: Drinking warm lemon water and baking soda can cure cancer and is 10,000 times stronger
+        than chemotherapy with zero side effects! Share before big pharma takes this down!
       </div>
       <div class="card-actions">
         <span>💬 982</span>
@@ -138,7 +163,9 @@
     <!-- Post 5: Article Snippet - Verified WHO (Green) -->
     <article class="feed-card" id="post-who">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Global Health Chronicle <span class="verified-check">✓</span></div>
           <div class="author-handle">@globalhealth_news • 12h ago</div>
@@ -146,7 +173,9 @@
       </div>
       <div class="article-snippet">
         <h3>WHO Officially Recommends Oxford R21/Matrix-M Malaria Vaccine</h3>
-        <p>In a historic public health milestone, the World Health Organization recommends the R21 Matrix-M malaria vaccine developed by University of Oxford, drastically expanding vaccine supply across endemic African regions.</p>
+        <p>In a historic public health milestone, the World Health Organization recommends the R21 Matrix-M malaria
+          vaccine developed by University of Oxford, drastically expanding vaccine supply across endemic African
+          regions.</p>
       </div>
       <div class="card-actions">
         <span>💬 88</span>
@@ -158,17 +187,21 @@
     <!-- Post 6: Manipulated Media / Deepfake Video (Red) -->
     <article class="feed-card" id="post-shark">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Storm Chasers Daily</div>
           <div class="author-handle">@stormchasers • 1d ago</div>
         </div>
       </div>
       <div class="card-text">
-        Incredible video: Actual shark swimming on the flooded highway freeway after the hurricane storm surge inundated the city!
+        Incredible video: Actual shark swimming on the flooded highway freeway after the hurricane storm surge inundated
+        the city!
       </div>
       <div class="card-media video-mock">
-        <video controls width="100%" poster="https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=800&auto=format&fit=crop&q=80">
+        <video controls width="100%"
+          poster="https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=800&auto=format&fit=crop&q=80">
           <source src="" type="video/mp4">
           Your browser does not support HTML video.
         </video>
@@ -184,14 +217,17 @@
     <!-- Post 7: Unverified / No Source Data (Gray) -->
     <article class="feed-card" id="post-unverified">
       <div class="card-author">
-        <img class="avatar" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80" alt="Avatar">
+        <img class="avatar"
+          src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80"
+          alt="Avatar">
         <div>
           <div class="author-name">Neighborhood Bulletin</div>
           <div class="author-handle">@suburb_notes • 2d ago</div>
         </div>
       </div>
       <div class="card-text">
-        Heard from a local maintenance worker that the municipal water reservoir will undergo emergency pipe repairs this Thursday between 2 AM and 5 AM. Stock up on water bottles just in case.
+        Heard from a local maintenance worker that the municipal water reservoir will undergo emergency pipe repairs
+        this Thursday between 2 AM and 5 AM. Stock up on water bottles just in case.
       </div>
       <div class="card-actions">
         <span>💬 14</span>
@@ -211,14 +247,17 @@
       </div>
       <div class="live-messages-box" id="live-chat-messages">
         <div class="message-text" data-testid="message-content">
-          <span class="user-tag">@science_daily:</span> Breaking: European electricity report confirms wind and solar set an all-time record generation in EU power grids.
+          <span class="user-tag">@science_daily:</span> Breaking: European electricity report confirms wind and solar
+          set an all-time record generation in EU power grids.
         </div>
         <div class="message-text" data-testid="message-content">
-          <span class="user-tag">@health_rumors:</span> SHOCKING: Drinking warm lemon water and baking soda completely cures cancer with zero chemo needed!
+          <span class="user-tag">@health_rumors:</span> SHOCKING: Drinking warm lemon water and baking soda completely
+          cures cancer with zero chemo needed!
         </div>
       </div>
       <div class="live-chat-input-bar">
-        <input type="text" id="demo-chat-input" class="live-chat-input" placeholder="Type a message or claim here (e.g. 'Drinking lemon water cures cancer')..." autocomplete="off" />
+        <input type="text" id="demo-chat-input" class="live-chat-input"
+          placeholder="Type a message or claim here (e.g. 'Drinking lemon water cures cancer')..." autocomplete="off" />
         <button id="demo-chat-send" class="live-chat-send-btn">Send Message</button>
       </div>
     </div>
@@ -227,4 +266,5 @@
 
   <script src="demo.js"></script>
 </body>
+
 </html>

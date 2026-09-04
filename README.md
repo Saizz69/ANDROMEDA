@@ -121,47 +121,60 @@ User right-clicks content
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
-/extension          → Subsystem 1: Manifest V3 browser extension
-/backend
-  /detection         → Subsystem 2: FastAPI service, curated DB, matching, tagging
-  /response           → Subsystem 3: LLM explanation + correction-card generation
-/data
-  hoax_database.json  → Seeded curated misinformation entries
-README.md
+├── manifest.json              → Manifest V3 browser extension configuration
+├── background/                → Background Service Worker & Multi-Tier Fact Engine
+│   ├── background.js          → Chrome runtime listeners, context menus, and dispatchers
+│   └── fact-engine.js         → Andromeda Local API, Featherless AI LLM, Google Fact Check, offline DB
+├── content/                   → Content scripts for live overlay badges & card popups
+│   ├── content.js             → Live DOM scanner and mutation observer
+│   ├── scanner.js             → Message and article parser
+│   └── badge-ui.js            → Isolated Shadow DOM traffic-light badge controllers
+├── popup/                     → Extension toolbar popup control panel
+├── options/                   → Extension settings & API key management
+├── web/                       → Web Companion App (FastAPI templates & static assets)
+│   ├── templates/index.html   → Accessible web companion UI
+│   └── static/                → Modern CSS design system and client JS
+├── subsystem1_ingestion/      → Ingestion adapters (Text, OCR for images, ASR for voice)
+├── subsystem2_detection/      → Detection Engine (Curated DB matching, Deepfake forensics, Tavily search)
+├── subsystem3_response/       → Response Generator (Grounded LLM explanations & Pillow correction cards)
+├── database/hoaxes.json       → Curated database of recurring hoaxes & persuasion patterns
+├── test/                      → Interactive feed demo & playground suite
+├── tests/                     → Pytest unit and end-to-end integration tests
+├── main.py                    → FastAPI application entry point with CORS & demo routing
+└── config.py                  → System configuration and API credentials
 ```
 
-## Getting started
+## Getting Started
 
-### 1. Backend setup
+### 1. Run the Backend & Web Companion
 ```bash
-cd backend
-pip install -r requirements.txt
-cp .env.example .env   # fill in API keys below
-uvicorn main:app --reload
+# 1. Install dependencies
+pip install -r requirements.txt  # (fastapi, uvicorn, pillow, httpx, python-dotenv, etc.)
+
+# 2. Configure environment (optional: add Featherless/Tavily keys)
+cp .env.example .env
+
+# 3. Start the FastAPI server
+uvicorn main:app --reload --port 8000
 ```
 
-**Required environment variables (`.env`):**
-```
-GOOGLE_CLOUD_VISION_API_KEY=
-LLM_PROVIDER_API_KEY=
-DEEPFAKE_SERVICE_URL=http://localhost:8001
-```
+- **Web Companion App:** Open [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **Interactive Feed Demo:** Open [http://127.0.0.1:8000/demo](http://127.0.0.1:8000/demo)
+- **FastAPI Interactive Docs:** Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-### 2. Deepfake service
+### 2. Load the Browser Extension
+1. Open Google Chrome, Brave, or Microsoft Edge and navigate to `chrome://extensions` (or `edge://extensions`).
+2. Toggle on **Developer mode** in the top-right corner.
+3. Click **Load unpacked** and select this repository folder (`ANDROMEDA`).
+4. TruthScan will now be active on web pages and chat platforms!
+
+### 3. Run Automated Tests
 ```bash
-git clone https://github.com/Arman176001/deepfake-detection
-cd deepfake-detection
-docker-compose up
+pytest -v
 ```
-
-### 3. Load the extension
-1. Go to `chrome://extensions`
-2. Enable **Developer mode**
-3. Click **Load unpacked** and select the `/extension` folder
-4. Right-click any image or selected text on a webpage → **Check this**
 
 ---
 

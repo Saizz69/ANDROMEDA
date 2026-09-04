@@ -14,6 +14,8 @@ class Settings:
     
     # Credentials & API Keys
     TAVILY_API_KEY: str = os.getenv("TAVILY_API_KEY", "YOUR_TAVILY_API_KEY_PLACEHOLDER")
+    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY") or os.getenv("GOOGLE_SEARCH_API_KEY") or os.getenv("GOOGLE_FACT_CHECK_API_KEY", "")
+    GOOGLE_CSE_ID: str = os.getenv("GOOGLE_CSE_ID") or os.getenv("GOOGLE_SEARCH_ENGINE_ID") or os.getenv("GOOGLE_CX", "")
     FEATHERLESS_API_KEY: str = os.getenv("FEATHERLESS_API_KEY") or os.getenv("LLM_API_KEY", "YOUR_LLM_API_KEY_PLACEHOLDER")
     LLM_API_KEY: str = FEATHERLESS_API_KEY
     LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://api.featherless.ai/v1")

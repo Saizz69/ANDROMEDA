@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Misinformation Decoder — Check Before You Forward</title>
+  <meta name="description" content="A friendly, jargon-free tool to check suspicious messages, viral images, and voice notes before forwarding them on family WhatsApp and Telegram groups.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 48 48" width="28" height="28" fill="none">
+            <path d="M24 4L8 10V22C8 32.5 14.8 42.2 24 44C33.2 42.2 40 32.5 40 22V10L24 4Z" fill="#10b981"/>
+            <path d="M16 23.5L21.5 29L32 18.5" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">Family Misinformation Decoder</span>
+          <span class="brand-tagline">TruthScan Engine</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-link active">Companion App</a>
+        <a href="/demo" class="nav-link">Interactive Feed Demo</a>
+        <a href="/docs" target="_blank" class="nav-link">FastAPI Docs</a>
+        <a href="#extension-info" class="nav-link">Browser Extension</a>
+      </nav>
+
+      <div class="backend-status-pill">
+        <span class="status-dot"></span>
+        <span class="status-label">Backend Connected</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-badge">✨ No Jargon • No Accounts • Plain-Language Fact-Checking</div>
+      <h1 class="hero-title">Check before you forward.</h1>
+      <p class="hero-subtitle">
+        Paste any suspicious WhatsApp message, upload a screenshot, or upload a voice note.
+        Get an honest, respectful answer and a shareable correction card to keep your family safe.
+      </p>
+
+      <!-- Quick Preset Examples -->
+      <div class="sample-chips">
+        <span class="chip-label">Try an example:</span>
+        <button class="chip-btn" data-claim="Drinking boiled garlic water cures coronavirus and all viral respiratory infections immediately.">🧄 Boiled Garlic Cure</button>
+        <button class="chip-btn" data-claim="Government is giving free laptops and ₹50,000 monthly allowance to all students. Click the link to register now before spots fill up.">💻 Free Student Laptops</button>
+        <button class="chip-btn" data-claim="WhatsApp will become paid ₹0.99 per message starting tomorrow unless you forward this message to 10 contacts.">📱 WhatsApp Becoming Paid</button>
+        <button class="chip-btn" data-claim="NASA's James Webb Space Telescope released the deepest infrared image of the early universe.">🔭 NASA Webb Telescope</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace Section -->
+  <main class="container main-content">
+    <div class="workspace-card">
+      <!-- Input Tab Bar -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="tab-text" id="btn-tab-text">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Text Message / Claim
+        </button>
+        <button class="tab-btn" data-tab="tab-image" id="btn-tab-image">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Screenshot / Image (OCR)
+        </button>
+        <button class="tab-btn" data-tab="tab-audio" id="btn-tab-audio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Voice Note / Audio (ASR)
+        </button>
+      </div>
+
+      <!-- Tab 1: Text Input -->
+      <div class="tab-pane active" id="tab-text">
+        <form id="form-text-check">
+          <label for="text-input" class="input-label">Paste forwarded message, headline, or claim:</label>
+          <div class="textarea-wrapper">
+            <textarea id="text-input" class="main-textarea" rows="4" placeholder="e.g., Forwarded as received: Urgent alert from Ministry of Health regarding new advisory..."></textarea>
+          </div>
+          <div class="form-footer">
+            <div class="lang-selector">
+              <label for="language-select">Response Language:</label>
+              <select id="language-select" class="select-box">
+                <option value="en">English</option>
+                <option value="hi">Hindi (हिंदी)</option>
+                <option value="es">Spanish (Español)</option>
+                <option value="fr">French (Français)</option>
+              </select>
+            </div>
+            <button type="submit" class="submit-btn" id="btn-submit-text">
+              <span class="btn-text">Verify Claim Now</span>
+              <span class="btn-loader" style="display: none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 2: Image / Screenshot Input -->
+      <div class="tab-pane" id="tab-image">
+        <form id="form-image-check">
+          <div class="drop-zone" id="image-dropzone">
+            <input type="file" id="image-file-input" accept="image/png,image/jpeg,image/webp,image/jpg" class="file-input-hidden">
+            <div class="drop-content">
+              <div class="drop-icon">🖼️</div>
+              <p class="drop-title">Drag & drop a screenshot or image here</p>
+              <p class="drop-sub">Supports PNG, JPG, JPEG, WebP • OCR & Forensic Deepfake Inspection</p>
+              <button type="button" class="browse-btn" onclick="document.getElementById('image-file-input').click()">Browse Files</button>
+            </div>
+            <div class="preview-box" id="image-preview-container" style="display: none;">
+              <img id="image-preview" src="" alt="Uploaded image preview">
+              <div class="preview-info">
+                <span id="image-filename" class="preview-name">image.png</span>
+                <button type="button" class="remove-btn" id="btn-remove-image">Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-footer">
+            <div class="extra-text-input">
+              <input type="text" id="image-context-text" class="text-input-field" placeholder="Optional context or caption...">
+            </div>
+            <button type="submit" class="submit-btn" id="btn-submit-image">
+              <span class="btn-text">Scan & Verify Image</span>
+              <span class="btn-loader" style="display: none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 3: Voice Note / Audio Input -->
+      <div class="tab-pane" id="tab-audio">
+        <form id="form-audio-check">
+          <div class="drop-zone" id="audio-dropzone">
+            <input type="file" id="audio-file-input" accept="audio/mp3,audio/wav,audio/ogg,audio/m4a" class="file-input-hidden">
+            <div class="drop-content">
+              <div class="drop-icon">🎙️</div>
+              <p class="drop-title">Upload a forwarded voice note or audio clip</p>
+              <p class="drop-sub">Supports MP3, WAV, OGG, M4A • Automatic Speech Transcription (ASR)</p>
+              <button type="button" class="browse-btn" onclick="document.getElementById('audio-file-input').click()">Browse Audio</button>
+            </div>
+            <div class="preview-box" id="audio-preview-container" style="display: none;">
+              <audio id="audio-preview" controls></audio>
+              <div class="preview-info">
+                <span id="audio-filename" class="preview-name">voice.mp3</span>
+                <button type="button" class="remove-btn" id="btn-remove-audio">Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-footer">
+            <div class="extra-text-input">
+              <input type="text" id="audio-context-text" class="text-input-field" placeholder="Optional context...">
+            </div>
+            <button type="submit" class="submit-btn" id="btn-submit-audio">
+              <span class="btn-text">Transcribe & Verify Audio</span>
+              <span class="btn-loader" style="display: none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Processing State -->
+    <div class="loading-container" id="loading-state" style="display: none;">
+      <div class="pulse-spinner"></div>
+      <h3 class="loading-title">Cross-referencing claim across databases and fact-checkers...</h3>
+      <p class="loading-sub">Running pattern detection, reverse matching, and grounded explanation generator.</p>
+    </div>
+
+    <!-- Results Section -->
+    <section class="results-container" id="results-section" style="display: none;">
+      <!-- Verdict Banner -->
+      <div class="verdict-card" id="verdict-banner">
+        <div class="verdict-header">
+          <div class="verdict-badge-icon" id="verdict-icon">⚠️</div>
+          <div>
+            <div class="verdict-status-title" id="verdict-status-title">Please Double-Check This Message</div>
+            <div class="verdict-subtitle" id="verdict-category-title">Known Recurring Hoax</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Content Grid -->
+      <div class="result-grid">
+        <!-- Left: Text Explanation & Context -->
+        <div class="result-details-col">
+          <div class="card result-card">
+            <h3 class="card-heading">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              Plain-Language Explanation
+            </h3>
+            <div class="explanation-body" id="explanation-text">
+              Loading explanation...
+            </div>
+            <div class="card-actions-row">
+              <button class="action-btn" id="btn-copy-explanation">
+                📋 Copy Explanation to Share
+              </button>
+              <button class="action-btn secondary" id="btn-reset-check">
+                🔄 Check Another Claim
+              </button>
+            </div>
+          </div>
+
+          <!-- Metadata & Persuasion Tactics -->
+          <div class="card result-card">
+            <h3 class="card-heading">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Persuasion Tactics & Timeline
+            </h3>
+            
+            <div class="metadata-group">
+              <div class="meta-label">Circulation Timeline:</div>
+              <div class="timeline-badge" id="timeline-text">
+                First seen in 2020 • Resurfaces seasonally
+              </div>
+            </div>
+
+            <div class="metadata-group">
+              <div class="meta-label">Persuasion Techniques Identified:</div>
+              <div class="tags-container" id="tactics-tags">
+                <span class="tactic-tag">False Urgency</span>
+                <span class="tactic-tag">Fear Appeal</span>
+              </div>
+            </div>
+
+            <div class="metadata-group">
+              <div class="meta-label">Verified Reference Sources:</div>
+              <div class="sources-list" id="sources-container">
+                <!-- Links dynamically inserted -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual Correction Card -->
+        <div class="result-card-col">
+          <div class="card result-card card-preview-container">
+            <div class="card-preview-header">
+              <h3 class="card-heading">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Shareable Correction Card
+              </h3>
+              <span class="format-badge">PNG Image</span>
+            </div>
+            <p class="preview-description">Forward this clean visual card to family groups instead of long arguments.</p>
+            
+            <div class="card-canvas-wrapper">
+              <img id="correction-card-img" class="card-image-display" src="" alt="Correction Card">
+            </div>
+
+            <div class="card-download-actions">
+              <a id="btn-download-card" download="correction-card.png" href="#" class="download-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download PNG Card
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture & Features Showcase -->
+    <section class="info-section" id="extension-info">
+      <h2 class="section-title">Connected Subsystems in ANDROMEDA</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📥</div>
+          <h4>Subsystem 1: Ingestion</h4>
+          <p>Normalizes input across web browser extension context menus, OCR screenshot engine, and voice note ASR transcription into a unified JSON contract.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h4>Subsystem 2: Detection Engine</h4>
+          <p>Combines curated historical hoax database matching, XceptionNet image tampering analysis, Tavily live web retrieval, and linguistic pattern tagging.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h4>Subsystem 3: Grounded Response</h4>
+          <p>Generates warm, plain-language explanations with zero confusing percentages, alongside auto-rendered PNG correction cards for WhatsApp & Telegram.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <div>
+        <strong>Family Misinformation Decoder</strong> — Built for digital literacy and respectful family fact-checking.
+      </div>
+      <div class="footer-links">
+        <a href="/demo">Interactive Demo</a>
+        <a href="/docs">API Documentation</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

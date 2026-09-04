@@ -38,6 +38,15 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
           How TruthScan Works
         </a>
+        <div style="margin: 12px 0 6px 12px; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Linked Tools</div>
+        <a href="http://127.0.0.1:8000" target="_blank" class="nav-item">
+          <span style="font-size: 14px;">🌐</span>
+          Web Companion App
+        </a>
+        <a href="http://127.0.0.1:8000/demo" target="_blank" class="nav-item">
+          <span style="font-size: 14px;">🧪</span>
+          Feed Demo Playground
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -55,7 +64,42 @@
       <section id="section-api" class="content-section">
         <div class="section-header">
           <h2>AI Backend & Fact-Checking APIs</h2>
-          <p class="section-desc">Connect live LLMs from Featherless AI and Google Fact Check Tools for automated real-time text analysis.</p>
+          <p class="section-desc">Configure your detection pipeline: Local ANDROMEDA Engine, Featherless AI LLMs, and Google Fact Check Tools.</p>
+        </div>
+
+        <!-- ANDROMEDA Local Backend Card -->
+        <div class="card api-highlight-card" style="border-color: #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(11, 15, 25, 0.95));">
+          <div class="card-header-badge">
+            <div class="provider-info">
+              <span class="provider-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.4);">RECOMMENDED • FULL PIPELINE</span>
+              <h3 class="provider-title">ANDROMEDA Local Detection Engine</h3>
+              <p class="provider-desc">
+                Connects directly to your local FastAPI backend server for end-to-end multi-tier analysis (Curated Hoax DB, Image Tampering Forensics, Tavily Live Web Search, OCR, and Grounded Plain-Language LLM generation).
+              </p>
+            </div>
+            <a href="http://127.0.0.1:8000" target="_blank" rel="noopener noreferrer" class="external-link-btn" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.3);">
+              <span>Open Web Companion App ↗</span>
+            </a>
+          </div>
+
+          <div class="api-field">
+            <div class="field-label-row">
+              <label class="field-label" for="backend-url-input">Local Backend Server URL</label>
+              <span class="key-status-pill" id="backend-status-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">Ready</span>
+            </div>
+            <div class="input-with-action">
+              <input type="text" id="backend-url-input" value="http://127.0.0.1:8000" placeholder="http://127.0.0.1:8000" class="text-input" style="color: #6ee7b7; font-family: monospace;">
+            </div>
+            <p class="field-help">Default is <code>http://127.0.0.1:8000</code> when running <code>uvicorn main:app --reload</code>.</p>
+          </div>
+
+          <div class="api-actions-row">
+            <button id="test-backend-btn" class="secondary-btn" style="background: #10b981; color: #0b0f19; font-weight: 700; border: none;">
+              <span class="btn-spinner" id="backend-spinner" style="display: none;"></span>
+              <span id="backend-btn-text">Test Backend Server</span>
+            </button>
+            <div id="backend-test-result" class="test-feedback"></div>
+          </div>
         </div>
 
         <!-- Featherless AI Card -->

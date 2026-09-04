@@ -17,7 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefScanVideos = document.getElementById('pref-scan-videos');
   const prefSensitivity = document.getElementById('pref-sensitivity');
 
-  // API Elements
+  // API & Backend Elements
+  const backendUrlInput = document.getElementById('backend-url-input');
+  const testBackendBtn = document.getElementById('test-backend-btn');
+  const backendSpinner = document.getElementById('backend-spinner');
+  const backendBtnText = document.getElementById('backend-btn-text');
+  const backendTestResult = document.getElementById('backend-test-result');
+  const backendStatusPill = document.getElementById('backend-status-pill');
+
   const featherlessKeyInput = document.getElementById('featherless-key-input');
   const toggleKeyVisibilityBtn = document.getElementById('toggle-key-visibility');
   const featherlessModelSelect = document.getElementById('featherless-model-select');
@@ -61,7 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
     prefScanVideos.checked = settings.scanVideos !== false;
     prefSensitivity.value = sensitivityReverseMap[settings.sensitivity || 'medium'] || '2';
 
-    // API Keys
+    // Backend & API Keys
+    if (backendUrlInput) {
+      backendUrlInput.value = settings.backendUrl || 'http://127.0.0.1:8000';
+    }
     featherlessKeyInput.value = settings.featherlessApiKey || '';
     featherlessModelSelect.value = settings.featherlessModel || 'meta-llama/Meta-Llama-3.1-8B-Instruct';
     googleKeyInput.value = settings.googleApiKey || '';
@@ -119,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
     activeSettings.scanVideos = prefScanVideos.checked;
     activeSettings.sensitivity = sensitivityMap[prefSensitivity.value] || 'medium';
 
+    if (backendUrlInput) {
+      activeSettings.backendUrl = backendUrlInput.value.trim() || 'http://127.0.0.1:8000';
+    }
     activeSettings.featherlessApiKey = featherlessKeyInput.value.trim();
     activeSettings.featherlessModel = featherlessModelSelect.value;
     activeSettings.googleApiKey = googleKeyInput.value.trim();
@@ -132,6 +145,42 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res && res.success) {
         showToast('Settings successfully updated');
       }
+    });
+  }
+
+  // Test ANDROMEDA Local Backend Server
+  if (testBackendBtn) {
+    testBackendBtn.addEventListener('click', () => {
+      const url = backendUrlInput.value.trim() || 'http://127.0.0.1:8000';
+      backendSpinner.style.display = 'inline-block';
+      backendBtnText.textContent = 'Testing...';
+      testBackendBtn.disabled = true;
+      backendTestResult.textContent = '';
+
+      chrome.runtime.sendMessage({
+        action: 'TEST_BACKEND_CONNECTION',
+        backendUrl: url
+      }, (res) => {
+        backendSpinner.style.display = 'none';
+        backendBtnText.textContent = 'Test Backend Server';
+        testBackendBtn.disabled = false;
+
+        if (res && res.success) {
+          backendTestResult.className = 'test-feedback is-success';
+          const info = res.data || {};
+          const dbCount = info.database_entries || 0;
+          backendTestResult.textContent = `✓ Backend online! Latency: ${res.latencyMs}ms (${info.project} v${info.version}, ${dbCount} curated hoaxes loaded)`;
+          backendStatusPill.className = 'key-status-pill is-connected';
+          backendStatusPill.textContent = 'Live Connected';
+          saveSettings();
+        } else {
+          backendTestResult.className = 'test-feedback is-error';
+          const errMsg = res ? (res.error || 'Server unreachable') : 'Connection failed';
+          backendTestResult.textContent = `✕ Cannot connect to ${url} (${errMsg}). Make sure 'uvicorn main:app --reload' is running.`;
+          backendStatusPill.className = 'key-status-pill is-error';
+          backendStatusPill.textContent = 'Server Offline';
+        }
+      });
     });
   }
 

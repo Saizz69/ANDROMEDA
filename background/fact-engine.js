@@ -632,14 +632,128 @@ export async function testFeatherlessConnection(apiKey, model = 'meta-llama/Meta
 }
 
 /**
+ * Test ANDROMEDA Local Backend API connection
+ */
+export async function testBackendConnection(backendUrl = 'http://127.0.0.1:8000') {
+  const startTime = Date.now();
+  try {
+    const cleanUrl = (backendUrl || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+    const res = await fetch(`${cleanUrl}/api/status`, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+    const elapsedMs = Date.now() - startTime;
+    if (!res.ok) {
+      return { success: false, error: `HTTP ${res.status}` };
+    }
+    const data = await res.json();
+    return {
+      success: true,
+      latencyMs: elapsedMs,
+      data: data
+    };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
+/**
+ * Query Local ANDROMEDA FastAPI Backend (/api/check-payload)
+ */
+export async function queryAndromedaBackend(target, backendUrl = 'http://127.0.0.1:8000') {
+  try {
+    const cleanUrl = (backendUrl || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+    const payload = {
+      content_type: target.type === 'image' ? 'image' : 'text',
+      raw_content: target.content || target.title || target.url || 'Web content',
+      extracted_text: target.content || target.title || '',
+      language: 'en',
+      timestamp: new Date().toISOString()
+    };
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    const res = await fetch(`${cleanUrl}/api/check-payload`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    const verdict = data.verdict || {};
+    const vUpper = (verdict.verdict || 'UNVERIFIED').toUpperCase();
+
+    let status = 'unverified';
+    let color = RATING_COLORS.GRAY;
+    let score = null;
+    let headline = 'Unverified claim';
+
+    if (vUpper === 'FALSE') {
+      status = 'misleading';
+      color = RATING_COLORS.RED;
+      score = 15;
+      headline = 'Likely misleading / hoax';
+    } else if (vUpper === 'MISLEADING') {
+      status = 'needs_context';
+      color = RATING_COLORS.YELLOW;
+      score = 55;
+      headline = 'Needs context';
+    } else if (vUpper === 'TRUE') {
+      status = 'verified';
+      color = RATING_COLORS.GREEN;
+      score = 95;
+      headline = 'Verified accurate';
+    }
+
+    const firstSource = verdict.sources && verdict.sources[0] ? verdict.sources[0] : `${cleanUrl}/`;
+
+    return {
+      status,
+      headline,
+      score,
+      color,
+      explanation: data.text_explanation || 'Analyzed by ANDROMEDA fact-checking engine.',
+      originalSource: {
+        title: verdict.matched_claim || 'ANDROMEDA Multi-Tier Fact Engine',
+        publisher: 'ANDROMEDA Local Service',
+        publishDate: verdict.first_seen_date || 'Current',
+        url: firstSource,
+        credibilityNotes: verdict.confidence_note || 'Evaluated across curated hoaxes, web search, and grounded LLMs.'
+      },
+      checkedAgainst: (verdict.sources || []).map(s => ({ name: 'Verified Source', url: s })),
+      isRealSourceCheck: status === 'verified',
+      cardImageBase64: data.card_image_base64,
+      manipulationTags: verdict.manipulation_tags || [],
+      engine: 'ANDROMEDA Local Engine',
+      timestamp: Date.now()
+    };
+  } catch (err) {
+    // If backend is not running, return null to continue to fallbacks
+    return null;
+  }
+}
+
+/**
  * Main Verification Engine Method
- * Chains: Google Fact Check API -> Featherless AI LLM -> Curated Database -> Sensationalism Heuristics
+ * Chains: ANDROMEDA Backend -> Google Fact Check API -> Featherless AI LLM -> Curated Database -> Sensationalism Heuristics
  */
 export async function verifyContent(target, settings = {}) {
   const sensitivity = settings.sensitivity || 'medium';
   const queryText = (target.content || target.title || target.url || '').trim();
   const normalized = normalizeText(queryText);
   const queryTokens = normalized.split(/\s+/);
+
+  // 0. Primary Tier: Local ANDROMEDA FastAPI Backend (if enabled/accessible)
+  if (settings.useLocalBackend !== false && queryText.length > 5) {
+    const backendResult = await queryAndromedaBackend(target, settings.backendUrl || 'http://127.0.0.1:8000');
+    if (backendResult) {
+      return backendResult;
+    }
+  }
 
   // 1. Check Google Fact Check Tools API if key provided
   let googleResults = null;
